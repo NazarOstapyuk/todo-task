@@ -6,6 +6,7 @@ import {useAppDispatch} from "../../hooks/redux";
 import {TaskFormValues} from "./types";
 import {addTask} from "../../store/reducers/todoSlice";
 import {generateRandomId} from "../../helper/functions.helpers";
+import {toast} from "react-toastify";
 
 
 export const TodoForm = () => {
@@ -25,6 +26,7 @@ export const TodoForm = () => {
         (data: TaskFormValues) => {
             const id = generateRandomId();
             dispatch(addTask({ ...data, id }));
+            toast.success('you added new task')
             reset()
         },
         [dispatch, reset]

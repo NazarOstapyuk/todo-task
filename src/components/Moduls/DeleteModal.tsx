@@ -1,6 +1,7 @@
 import { Box, Modal, Button, Typography } from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {setDeleteData, deleteTask, toggleDeleteModal} from "../../store/reducers/todoSlice";
+import {toast} from "react-toastify";
 export const DeleteModal = () => {
   const {showDeleteModal, deleteData} = useAppSelector((state) => state.todoReducer);
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ export const DeleteModal = () => {
       dispatch(deleteTask(deleteData?.id));
       dispatch(toggleDeleteModal())
       dispatch(setDeleteData(null))
+      toast.error('you was delete task')
   }
   return (
     <>
