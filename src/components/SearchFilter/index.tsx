@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import {Box, Button, TextField} from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -6,14 +6,37 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {allTasks, completeTasks, searchFilter} from "../../store/reducers/todoSlice";
 import {useBoolean} from "../../hooks/use-boolean";
 import useDebounce from "../../hooks/use-debounce";
-import { CustomButton } from "../CustomButton";
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles({
+    button: {
+        width: '100%',
+        maxWidth: '87px',
+        height: '43px',
+        fontSize: '14px',
+        color: '#5dcb42',
+        backgroundColor: '',
+        '&:hover': {
+            backgroundColor: '',
+            color: '#5dcb42',
+        },
+    },
+    activeButton: {
+        backgroundColor: '#5dcb42',
+        color: '#ffffff',
+        '&:hover': {
+            backgroundColor: '#5dcb42',
+            color: '#ffffff',
+        },
+    },
+});
 export const SearchFilter = () => {
   const dispatch = useAppDispatch();
   const isAll = useBoolean(true);
     const {task} = useAppSelector((state) => state.todoReducer);
     const [searchText, setSearchText] = useState("");
     const debouncedSearchTerm = useDebounce(searchText, 500) as any;
+    const classes = useStyles();
 
     useEffect(() => {
     if (isAll.value){
@@ -53,20 +76,32 @@ export const SearchFilter = () => {
             value={searchText}
             onChange={handleSearchChange}
         />
-        <CustomButton
-            text="All"
-            showStartIcon={false}
-            mr={'10px'}
-            isActive={isAll.value}
+        <Button
             onClick={isAll.onTrue}
-        />
-
-        <CustomButton
-            text="Done"
-            showStartIcon={true}
-            isActive={!isAll.value}
+            className={`${classes.button} ${isAll.value ? classes.activeButton : ''}`}
+            color="gringo"
+            variant="outlined"
+            style={{
+                backgroundColor: isAll.value ? '#5dcb42' : '',
+                color: isAll.value ? '#ffffff' : '#5dcb42',
+                marginRight: '10px'
+            }}
+        >
+            All
+        </Button>
+        <Button
             onClick={isAll.onFalse}
-        />
+            className={`${classes.button} ${!isAll.value ? classes.activeButton : ''}`}
+            color="gringo"
+            variant="outlined"
+            startIcon={<CheckCircleOutlineIcon style={{ fontSize: '16px' }} />}
+            style={{
+                backgroundColor: !isAll.value ? '#5dcb42' : '',
+                color: !isAll.value ? '#ffffff' : '#5dcb42',
+            }}
+        >
+            Done
+        </Button>
     </Box>
   );
 };

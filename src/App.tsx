@@ -2,9 +2,9 @@ import Background from "./components/Background";
 import Todos from "./components/Todos";
 import {Box} from "@mui/material";
 import {DeleteModal} from "./components/Moduls/DeleteModal";
-import ProgressBar from "./components/progress-bar";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ProgressBar from "./components/ProgressBar";
 
 export const App = () => {
   return (
